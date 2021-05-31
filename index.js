@@ -124,10 +124,10 @@ class DOMManager {
                         <div class="card"> 
                             <div class="row">
                                 <div class="col-sm">
-                                    <input type="text" id="${house._id}-room-name" class="form-control" placeholder="Room Name">
+                                    <input type="text" id="${house._id}-room-name" class="form-control" placeholder="Car Model">
                                 </div>
                                 <div class="col-sm">
-                                <input type="text" id="${house._id}-room-area" class="form-control" placeholder="Room Area">
+                                <input type="text" id="${house._id}-room-area" class="form-control" placeholder="Model Year">
                                 </div>
                             </div>
 
@@ -145,9 +145,9 @@ class DOMManager {
             for (let room of house.rooms) {
                 $(`#${house._id}`).find('.card-body').append(
                     `<p>
-                        <span id="name-${room._id}"><strong>Name: </strong> ${room.name}</span>
-                        <span id="area-${room._id}"><strong>Area: </strong> ${room.area}</span>
-                        <button class="btn btn-danger" onclick="DOMManager.deleteRoom('${house._id}', '${room._id}')">Delete Rooms</button>
+                        <span id="name-${room._id}"><strong>Make: </strong> ${room.name}</span>
+                        <span id="area-${room._id}"><strong>Year: </strong> ${room.area}</span>
+                        <button class="btn btn-danger" onclick="DOMManager.deleteRoom('${house._id}', '${room._id}')">Delete Car</button>
                         `
                 )
             }
