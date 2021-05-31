@@ -4,12 +4,15 @@ class Car {
         this.rooms = [];
     }
 
-    addRoom(name, area) {
-        this.rooms.push(new Room(name, area));
+    // room changed to model
+    addModel(name, area) {
+        this.rooms.push(new Model(name, area));
     }
 }
 
-class Room {
+
+//area changed to year
+class Model {
     constructor(name, area) {
         this.name = name;
         this.area = area;
@@ -75,10 +78,10 @@ class DOMManager {
         .then((cars) => this.render(cars));
     }
 
-    static addRoom(id) {
+    static addModel(id) {
         for (let car of this.cars) {
             if (car._id == id) {
-                car.rooms.push(new Room($(`#${car._id}-room-name`).val(), $(`#${car._id}-room-area`).val()))
+                car.rooms.push(new Model($(`#${car._id}-room-name`).val(), $(`#${car._id}-room-area`).val()))
                 CarService.updateCar(car)
                     .then(() => {
                         return CarService.getAllCars();
@@ -90,7 +93,7 @@ class DOMManager {
         }
     }
 
-    static deleteRoom(carId, roomId) {
+    static deleteModel(carId, roomId) {
         for (let car of this.cars) {
             if (car._id == carId) {
                 for (let room of car.rooms) {
@@ -133,7 +136,7 @@ class DOMManager {
 
                             
 
-                            <button id="${car._id}-new-room" onclick="DOMManager.addRoom('${car._id}')" class="btn btn-primary form-control">Add</button>
+                            <button id="${car._id}-new-room" onclick="DOMManager.addModel('${car._id}')" class="btn btn-primary form-control">Add</button>
 
                         </div>
                     </div>
@@ -147,7 +150,7 @@ class DOMManager {
                     `<p>
                         <span id="name-${room._id}"><strong>Make: </strong> ${room.name}</span>
                         <span id="area-${room._id}"><strong>Year: </strong> ${room.area}</span>
-                        <button class="btn btn-danger" onclick="DOMManager.deleteRoom('${car._id}', '${room._id}')">Delete Car</button>
+                        <button class="btn btn-danger" onclick="DOMManager.deleteModel('${car._id}', '${room._id}')">Delete Car</button>
                         `
                 )
             }
