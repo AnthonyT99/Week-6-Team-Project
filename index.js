@@ -4,14 +4,14 @@ class Car {
         this.rooms = [];
     }
 
-    // room changed to model
+    
     addModel(name, area) {
         this.rooms.push(new Model(name, area));
     }
 }
 
 
-//area changed to year
+
 class Model {
     constructor(name, area) {
         this.name = name;
