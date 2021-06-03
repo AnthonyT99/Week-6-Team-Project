@@ -1,47 +1,56 @@
-class House {
-    constructor(name) {
-        this.name = name;
+// the car class gets the Brand and Model of the car
+class Car {
+    constructor(brand) {
+        this.name = brand;
         this.rooms = [];
     }
 
-    addRoom(name, area) {
-        this.rooms.push(new Room(name, area));
+    // A funcation to push the brand and year of the car
+    addModel(brand, year) {
+        this.rooms.push(new Model(brand, year));
     }
 }
 
-class Room {
-    constructor(name, area) {
+
+// The model class takes the name of the manufacturer and the year of the car
+class Model {
+    constructor(name, year) {
         this.name = name;
-        this.area = area;
+        this.area = year;
     }
 }
 
-class HouseService {
+// The CarService class places the cars manufacturer and types into the url
+class CarService {
     static url = 'https://ancient-taiga-31359.herokuapp.com/api/houses';
 
-    static getAllHouses() {
+    static getAllCars() {
         return $.get(this.url);
     }
 
-    static getHouse(id) {
+    // It also gets the cars ID after they are placed
+    static getCar(id) {
         return $.get(this.url + `/${id}`);
     }
 
-    static createHouse(house) {
-        return $.post(this.url, house);
+    // Also is used to create the cars to allow them to show up and get IDs
+    static createCar(car) {
+        return $.post(this.url, car);
     }
 
-    static updateHouse(house) {
+    // updates the cars to there new inforamtion
+    static updateCar(car) {
         return $.ajax({
-            url: this.url + `/${house._id}`,
+            url: this.url + `/${car._id}`,
             dataType: 'json',
-            data: JSON.stringify(house),
+            data: JSON.stringify(car),
             contentType: 'application/json',
             type: 'PUT'
         })
     }
 
-    static deleteHouse(id) {
+    // Allows for cars to be deleted
+    static deleteCar(id) {
         return $.ajax({
             url: this.url + `/${id}`,
             type: 'DELETE'
@@ -50,104 +59,105 @@ class HouseService {
 
 }
 
+// The DOMManager renders the whole thing
 class DOMManager {
-    static houses;
+    static cars;
 
-    static getAllHouses() {
-        HouseService.getAllHouses().then(houses => this.render(houses));
+    // getAllCars is getting the car for the info of the model and year
+    static getAllCars() {
+        CarService.getAllCars().then(cars => this.render(cars));
     }
 
-    static createHouse(name) {
-        HouseService.createHouse(new House(name))
+    // creates the car that has the model and year under the manufacturer
+    static createCar(name) {
+        CarService.createCar(new Car(name))
         .then(() => {
-            return HouseService.getAllHouses();
+            return CarService.getAllCars();
         })
-        .then((houses) => this.render(houses));
+        .then((cars) => this.render(cars));
     }
 
-
-    static deleteHouse(id) {
+    // Deletes the car under the manufacturer
+    static deleteCar(id) {
         console.log(id)
-        HouseService.deleteHouse(id)
+        CarService.deleteCar(id)
         .then(() => {
-            return HouseService.getAllHouses();
+            return CarService.getAllCars();
         })
-        .then((houses) => this.render(houses));
+        .then((cars) => this.render(cars));
     }
 
-    static addRoom(id) {
-        for (let house of this.houses) {
-            if (house._id == id) {
-                house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val()))
-                HouseService.updateHouse(house)
+    // Adds the model of car under the manufacturer
+    static addModel(id) {
+        for (let car of this.cars) {
+            if (car._id == id) {
+                car.rooms.push(new Model($(`#${car._id}-room-name`).val(), $(`#${car._id}-room-area`).val()))
+                CarService.updateCar(car)
                     .then(() => {
-                        return HouseService.getAllHouses();
+                        return CarService.getAllCars();
                     
                     })
-                .then((houses) => this.render(houses));
+                .then((cars) => this.render(cars));
                 
             }
         }
     }
 
-    static deleteRoom(houseId, roomId) {
-        for (let house of this.houses) {
-            if (house._id == houseId) {
-                for (let room of house.rooms) {
+    // Deletes the model under the manufacturer
+    static deleteModel(carId, roomId) {
+        for (let car of this.cars) {
+            if (car._id == carId) {
+                for (let room of car.rooms) {
                     if (room._id == roomId) {
-                        console.log("house " + house)
+                        console.log("car " + car)
                         console.log("room " + room)
-                        house.rooms.splice(house.rooms.indexOf(room), 1);
-                        HouseService.updateHouse(house)
+                        car.rooms.splice(car.rooms.indexOf(room), 1);
+                        CarService.updateCar(car)
                         .then(() => {
-                            return HouseService.getAllHouses();
+                            return CarService.getAllCars();
                         })
-                        .then((houses) => this.render(houses));
+                        .then((cars) => this.render(cars));
                     }
                 }
             }
         }
     }
 
-    static render(houses) {
-        this.houses = houses;
+    // renders the information of the cars model and year under the manufacturer
+    static render(cars) {
+        this.cars = cars;
         $('#app').empty();
-        for (let house of houses) {
+        for (let car of cars) {
             $('#app').prepend(
-                `<div id="${house._id}" class="card">
+                `<div id="${car._id}" class="card">
                     <div class="card-header">
-                        <h2>${house.name}</h2>
-                        <button class="btn btn-danger" onclick="DOMManager.deleteHouse('${house._id}')">Delete</button>
+                        <h2>${car.name}</h2>
+                        <button class="btn btn-danger" onclick="DOMManager.deleteCar('${car._id}')">Delete</button>
                     </div>
-
                     <div class="card-body">
                         <div class="card"> 
                             <div class="row">
                                 <div class="col-sm">
-                                    <input type="text" id="${house._id}-room-name" class="form-control" placeholder="Room Name">
+                                    <input type="text" id="${car._id}-room-name" class="form-control" placeholder="Car Model">
                                 </div>
                                 <div class="col-sm">
-                                <input type="text" id="${house._id}-room-area" class="form-control" placeholder="Room Area">
+                                <input type="text" id="${car._id}-room-area" class="form-control" placeholder="Model Year">
                                 </div>
                             </div>
-
                             
-
-                            <button id="${house._id}-new-room" onclick="DOMManager.addRoom('${house._id}')" class="btn btn-primary form-control">Add</button>
-
+                            <button id="${car._id}-new-room" onclick="DOMManager.addModel('${car._id}')" class="btn btn-primary form-control">Add</button>
                         </div>
                     </div>
-
                 </div><br>`
 
             );
 
-            for (let room of house.rooms) {
-                $(`#${house._id}`).find('.card-body').append(
+            for (let room of car.rooms) {
+                $(`#${car._id}`).find('.card-body').append(
                     `<p>
-                        <span id="name-${room._id}"><strong>Name: </strong> ${room.name}</span>
-                        <span id="area-${room._id}"><strong>Area: </strong> ${room.area}</span>
-                        <button class="btn btn-danger" onclick="DOMManager.deleteRoom('${house._id}', '${room._id}')">Delete Rooms</button>
+                        <span id="name-${room._id}"><strong>Make: </strong> ${room.name}</span>
+                        <span id="area-${room._id}"><strong>Year: </strong> ${room.area}</span>
+                        <button class="btn btn-danger" onclick="DOMManager.deleteModel('${car._id}', '${room._id}')">Delete Car</button>
                         `
                 )
             }
@@ -156,9 +166,9 @@ class DOMManager {
     }
 }
 
-$('#create-new-house').click(() => {
-    DOMManager.createHouse($('#new-house-name').val());
-    $('#new-house-name').val('');
+$('#create-new-car').click(() => {
+    DOMManager.createCar($('#new-car-name').val());
+    $('#new-car-name').val('');
 });
 
-DOMManager.getAllHouses();
+DOMManager.getAllCars();

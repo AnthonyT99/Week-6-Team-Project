@@ -4,25 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House App</title>
+    <title>Car App</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+
+    <style>
+
+        /* Makes all h2 text black */
+        h2 {
+            color: #000000;
+        }
+
+        /* Makes the backfround of h2 text into the same size as h2's text */
+        h2 span { 
+            background-color: rgb(255, 0, 221); 
+        }
+
+        /* Add the pic of the car logos in the background */
+        body {
+            background-image: url('https://1000logos.net/wp-content/uploads/2021/03/American-Car-Brands-logo.jpg');
+        
+        }
+        
+    </style>
 
 </head>
 <body class="container">
 
-    <div id="new-house" class="jumbotron">
-        <h2>New House</h2>
-        <input type="text" id="new-house-name" class="form-control"> <br>
-        <button id="create-new-house" class="btn btn-primary form-control">Create</button>
+    <audio controls autoplay>
+        <source src="happy.mp3" type="audio/mp3">.
+    </audio>
+    <!-- Music by Wavecont, https://www.wavecont.com/free-download/
+        Licensed under creative commons Attribution-ShareAlike 4.0 International
+        https://creativecommons.org/licenses/by-sa/4.0/
+        Music promoted by https://www.chosic.com/ -->
+
+    <div id="new-car" class="jumbotron">
+        <h2><span>New Car Make</span></h2>
+        <input type="text" id="new-car-name" class="form-control"> <br>
+        <button id="create-new-car" class="btn btn-primary form-control">Create</button>
     </div>
 
+    <!-- gives this div the id of "app" to be used -->
     <div id="app">
 
     </div>
 
+    <!-- links the jquery -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- links the javascript -->
     <script src="index.js"></script>
+    <!-- links the bootstrap -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 </body>
