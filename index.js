@@ -5,7 +5,7 @@ class Car {
         this.rooms = [];
     }
 
-    // A funcation to push the brand and year of the car
+    // A function to push the brand and year of the car
     addModel(brand, year) {
         this.rooms.push(new Model(brand, year));
     }

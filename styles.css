@@ -1,7 +1,16 @@
-h2 {
-    color: #04070a;
+
+  /* Makes all h2 text black */
+  h2 {
+    color: #000000;
 }
 
+/* Makes the backfround of h2 text into the same size as h2's text */
+h2 span { 
+    background-color: rgb(255, 0, 221); 
+}
+
+/* Add the pic of the car logos in the background */
 body {
-    background-color: #32a885;
+    background-image: url('https://1000logos.net/wp-content/uploads/2021/03/American-Car-Brands-logo.jpg');
+
 }
